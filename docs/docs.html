@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProviderService Documentation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 0.5em;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            margin-top: 1.5em;
+            margin-bottom: 0.8em;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.4em;
+            margin-top: 1.2em;
+            margin-bottom: 0.6em;
+            color: #3498db;
+        }
+
+        nav {
+            background-color: #3498db;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        nav li {
+            margin: 0 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #2980b9;
+        }
+
+        section {
+            background-color: white;
+            padding: 25px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        pre, code {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+        }
+
+        code {
+            padding: 2px 6px;
+            font-size: 0.9em;
+        }
+
+        .highlight {
+            background-color: #fffde7;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .tip {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .warning {
+            background-color: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav li {
+                margin: 8px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ProviderService Documentation</h1>
+        <p>A lightweight service-oriented framework for roblox-ts</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#getting-started">Getting Started</a></li>
+            <li><a href="#core-concepts">Core Concepts</a></li>
+            <li><a href="#service-creation">Service Creation</a></li>
+            <li><a href="#dependency-injection">Dependency Injection</a></li>
+            <li><a href="#lifecycle-management">Lifecycle Management</a></li>
+            <li><a href="#data-access">Data Access Patterns</a></li>
+            <li><a href="#best-practices">Best Practices</a></li>
+            <li><a href="#error-handling">Error Handling</a></li>
+            <li><a href="#advanced-usage">Advanced Usage</a></li>
+            <li><a href="#api-reference">API Reference</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="overview">
+            <h2>Overview</h2>
+            <p>ProviderService is a lightweight, service-oriented framework for roblox-ts that provides service creation, client-server separation, dependency injection, and lifecycle management similar to the Knit framework.</p>
+        </section>
+
+        <section id="getting-started">
+            <h2>Getting Started</h2>
+
+            <h3>Installation</h3>
+            <pre><code>npm install @rbxts/providerservice</code></pre>
+
+            <h3>Basic Setup</h3>
+            <pre><code>import { ProviderService, ProviderServiceType } from "@rbxts/providerservice";
+
+// Initialize the provider service
+const providerService = new ProviderService();
+providerService.init();
+
+// Create your first service
+const playerService = providerService.createProvider(
+    "PlayerService",
+    ProviderServiceType.Server,
+    {
+        description: "Handles player data and operations"
+    }
+);
+
+// Start the service
+await providerService.startProvider("PlayerService");
+
+print("PlayerService is ready!");</code></pre>
+        </section>
+
+        <section id="core-concepts">
+            <h2>Core Concepts</h2>
+
+            <h3>Service Types</h3>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><code>Client</code></td>
+                    <td>Only available on client</td>
+                    <td><code>ProviderServiceType.Client</code></td>
+                </tr>
+                <tr>
+                    <td><code>Server</code></td>
+                    <td>Only available on server</td>
+                    <td><code>ProviderServiceType.Server</code></td>
+                </tr>
+                <tr>
+                    <td><code>Module</code></td>
+                    <td>Available on both client and server</td>
+                    <td><code>ProviderServiceType.Module</code></td>
+                </tr>
+            </table>
+
+            <h3>Service Lifecycle</h3>
+            <p>Each service goes through a clear lifecycle:</p>
+            <ol>
+                <li><strong>Init</strong> - Initialize service resources</li>
+                <li><strong>Start</strong> - Begin service operations</li>
+                <li><strong>Stop</strong> - Pause service operations</li>
+                <li><strong>Destroy</strong> - Clean up all resources</li>
+            </ol>
+        </section>
+
+        <section id="service-creation">
+            <h2>Service Creation</h2>
+
+            <h3>Basic Service</h3>
+            <pre><code>const playerService = providerService.createProvider(
+    "PlayerService",
+    ProviderServiceType.Server,
+    {
+        description: "Manages player data",
+        version: "1.0.0"
+    }
+);</code></pre>
+
+            <h3>Adding Methods</h3>
+            <pre><code>// Add a method to get player data
+providerService.connect(playerService, "getPlayerData", (playerId: number) => {
+    return {
+        id: playerId,
+        name: `Player${playerId}`,
+        level: 1,
+        xp: 0
+    };
+});
+
+// Add a method to update player XP
+providerService.connect(playerService, "updatePlayerXP", (playerId: number, xp: number) => {
+    print(`Updating XP for player ${playerId}: +${xp}`);
+    return true;
+});</code></pre>
+
+            <h3>Using the Service</h3>
+            <pre><code>// Start the service
+await providerService.startProvider("PlayerService");
+
+// Call methods
+const playerData = playerService.getPlayerData(123);
+const success = playerService.updatePlayerXP(123, 100);</code></pre>
+        </section>
+
+        <section id="dependency-injection">
+            <h2>Dependency Injection</h2>
+
+            <h3>Creating Services with Dependencies</h3>
+            <pre><code>// Create dependency services first
+providerService.createProvider("DatabaseService", ProviderServiceType.Server);
+providerService.createProvider("LoggerService", ProviderServiceType.Server);
+
+// Create a service that depends on others
+const playerService = providerService.createProvider(
+    "PlayerService",
+    ProviderServiceType.Server,
+    {
+        dependencies: ["DatabaseService", "LoggerService"]
+    }
+);</code></pre>
+
+            <h3>Injecting Dependencies</h3>
+            <pre><code>// Inject all dependencies automatically
+await providerService.injectDependencies("PlayerService");</code></pre>
+
+            <h3>Accessing Dependencies in Methods</h3>
+            <pre><code>providerService.connect(playerService, "getPlayerData", function(playerId: number) {
+    // Access dependencies using this.getDependency()
+    const logger = this.getDependency("LoggerService");
+    const db = this.getDependency("DatabaseService");
+
+    logger.log(`Getting data for player ${playerId}`);
+    return db.query("SELECT * FROM players WHERE id = ?", [playerId]);
+});</code></pre>
+        </section>
+
+        <section id="lifecycle-management">
+            <h2>Lifecycle Management</h2>
+
+            <h3>Service Lifecycle Methods</h3>
+            <pre><code>providerService.connect(playerService, "init", async () => {
+    print("PlayerService: Initializing...");
+    // Setup database connections
+    // Load configurations
+    // Initialize caches
+});
+
+providerService.connect(playerService, "start", async () => {
+    print("PlayerService: Starting...");
+    // Start accepting requests
+    // Begin background tasks
+});
+
+providerService.connect(playerService, "stop", async () => {
+    print("PlayerService: Stopping...");
+    // Save current state
+    // Stop background tasks
+});
+
+providerService.connect(playerService, "destroy", async () => {
+    print("PlayerService: Destroying...");
+    // Clean up all resources
+    // Close connections
+});</code></pre>
+
+            <h3>Starting and Stopping Services</h3>
+            <pre><code>// Start a single service
+await providerService.startProvider("PlayerService");
+
+// Stop a single service
+await providerService.stopProvider("PlayerService");
+
+// Start all services (respects dependency order)
+await providerService.startAllProviders();
+
+// Stop all services (reverse dependency order)
+await providerService.stopAllProviders();
+
+// Destroy a service completely
+await providerService.destroyProvider("PlayerService");</code></pre>
+        </section>
+
+        <section id="data-access">
+            <h2>Data Access Patterns</h2>
+
+            <h3>Method 1: Using Metatables</h3>
+            <pre><code>// Set up data storage with metatable
+const playerData = {
+    players: new Map<number, Player>(),
+    nextId: 1
+};
+
+playerService.setMetatable({
+    __index: (table, key) => {
+        if (key === "players") return playerData.players;
+        if (key === "nextId") return playerData.nextId;
+        return undefined;
+    }
+});
+
+// Access data via this.players
+providerService.connect(playerService, "getPlayerData", function(playerId) {
+    return this.players.get(playerId);
+});</code></pre>
+
+            <h3>Method 2: Using Closures</h3>
+            <pre><code>// Create service data storage
+const players = new Map<number, Player>();
+
+// Capture data in closure
+providerService.connect(playerService, "getPlayerData", (playerId) => {
+    return players.get(playerId);
+});</code></pre>
+
+            <h3>Method 3: Using Dependency Injection</h3>
+            <pre><code>// Create a data service
+const dataService = providerService.createProvider("DataService", ProviderServiceType.Server);
+
+providerService.connect(dataService, "init", function() {
+    this.players = new Map<number, Player>();
+});
+
+// Create player service with dependency
+const playerService = providerService.createProvider(
+    "PlayerService",
+    ProviderServiceType.Server,
+    { dependencies: ["DataService"] }
+);
+
+await providerService.injectDependencies("PlayerService");
+
+// Access data via dependency
+providerService.connect(playerService, "getPlayerData", function(playerId) {
+    const dataService = this.getDependency("DataService");
+    return dataService.players.get(playerId);
+});</code></pre>
+
+            <h3>Method 4: Using Metadata for Configuration</h3>
+            <pre><code>const playerService = providerService.createProvider(
+    "PlayerService",
+    ProviderServiceType.Server,
+    {
+        maxPlayers: 100,
+        defaultLevel: 1,
+        xpMultiplier: 1.5
+    }
+);
+
+providerService.connect(playerService, "createPlayer", function(name) {
+    const config = this.getMetadata();
+    return {
+        id: Date.now(),
+        name,
+        level: config.defaultLevel
+    };
+});</code></pre>
+        </section>
+
+        <section id="best-practices">
+            <h2>Best Practices</h2>
+
+            <h3>Service Organization</h3>
+            <pre><code>// Group related methods together
+providerService.connect(playerService, "getPlayerData", (playerId) => { /* ... */ });
+providerService.connect(playerService, "updatePlayerData", (playerId, data) => { /* ... */ });
+providerService.connect(playerService, "deletePlayerData", (playerId) => { /* ... */ });</code></pre>
+
+            <h3>Error Handling</h3>
+            <pre><code>providerService.connect(playerService, "getPlayerData", (playerId: number) => {
+    try {
+        if (typeof playerId !== "number" || playerId <= 0) {
+            throw new Error("Invalid player ID");
+        }
+
+        const data = database.getPlayer(playerId);
+        if (!data) {
+            throw new ServiceNotFoundError("Player not found");
+        }
+
+        return data;
+    } catch (error) {
+        const logger = this.getDependency("LoggerService");
+        logger.error(`Failed to get player data: ${error.message}`);
+        throw error;
+    }
+});</code></pre>
+
+            <h3>Async Operations</h3>
+            <pre><code>providerService.connect(playerService, "savePlayerData", async (playerId, data) => {
+    const db = this.getDependency("DatabaseService");
+    const logger = this.getDependency("LoggerService");
+
+    try {
+        logger.log(`Saving data for player ${playerId}`);
+        const result = await db.execute(
+            "UPDATE players SET data = ? WHERE id = ?",
+            [JSON.stringify(data), playerId]
+        );
+        return result;
+    } catch (error) {
+        logger.error(`Failed to save: ${error.message}`);
+        throw new Error(`Failed to save player data`);
+    }
+});</code></pre>
+        </section>
+
+        <section id="error-handling">
+            <h2>Error Handling</h2>
+
+            <h3>Error Types</h3>
+            <table>
+                <tr>
+                    <th>Error Type</th>
+                    <th>When Thrown</th>
+                    <th>Example</th>
+                </tr>
+                <tr>
+                    <td><code>ServiceNotFoundError</code></td>
+                    <td>Service or dependency not found</td>
+                    <td><code>new ServiceNotFoundError("PlayerService")</code></td>
+                </tr>
+                <tr>
+                    <td><code>CircularDependencyError</code></td>
+                    <td>Circular dependencies detected</td>
+                    <td><code>new CircularDependencyError(["A", "B", "A"])</code></td>
+                </tr>
+                <tr>
+                    <td><code>ServiceTypeMismatchError</code></td>
+                    <td>Wrong client/server access</td>
+                    <td><code>new ServiceTypeMismatchError("Service", Client, Server)</code></td>
+                </tr>
+                <tr>
+                    <td><code>ProviderServiceError</code></td>
+                    <td>Base error class</td>
+                    <td><code>new ProviderServiceError("Custom error")</code></td>
+                </tr>
+            </table>
+
+            <h3>Handling Errors</h3>
+            <pre><code>try {
+    const service = providerService.getProvider("NonExistentService");
+} catch (error) {
+    if (error instanceof ServiceNotFoundError) {
+        print(`Service not found: ${error.message}`);
+    } else if (error instanceof ServiceTypeMismatchError) {
+        print(`Type mismatch: ${error.message}`);
+    } else {
+        print(`Unknown error: ${error.message}`);
+    }
+}</code></pre>
+        </section>
+
+        <section id="advanced-usage">
+            <h2>Advanced Usage</h2>
+
+            <h3>Complete Game Example</h3>
+            <pre><code>// Initialize framework
+const PS = new ProviderService();
+PS.init();
+
+// Create core services
+PS.createProvider("DatabaseService", ProviderServiceType.Server);
+PS.createProvider("LoggerService", ProviderServiceType.Server);
+PS.createProvider("EventService", ProviderServiceType.Server);
+
+// Create game services with dependencies
+PS.createProvider("PlayerService", ProviderServiceType.Server, {
+    dependencies: ["DatabaseService", "LoggerService", "EventService"]
+});
+
+PS.createProvider("InventoryService", ProviderServiceType.Server, {
+    dependencies: ["DatabaseService", "LoggerService"]
+});
+
+// Add methods to PlayerService
+const playerService = PS.getProvider("PlayerService");
+
+PS.connect(playerService, "createPlayer", (playerData) => {
+    const logger = playerService.getDependency("LoggerService");
+    const db = playerService.getDependency("DatabaseService");
+
+    logger.log(`Creating player: ${playerData.name}`);
+    return db.execute(
+        "INSERT INTO players (name, email) VALUES (?, ?)",
+        [playerData.name, playerData.email]
+    );
+});
+
+PS.connect(playerService, "getPlayer", (playerId) => {
+    const db = playerService.getDependency("DatabaseService");
+    return db.query("SELECT * FROM players WHERE id = ?", [playerId]);
+});
+
+// Inject dependencies and start all services
+await PS.injectDependencies("PlayerService");
+await PS.injectDependencies("InventoryService");
+await PS.startAllProviders();
+
+print("Game services ready!");</code></pre>
+        </section>
+
+        <section id="api-reference">
+            <h2>API Reference</h2>
+
+            <h3>ProviderService</h3>
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>init()</code></td>
+                    <td>Initialize the provider service</td>
+                </tr>
+                <tr>
+                    <td><code>createProvider()</code></td>
+                    <td>Create a new service with metadata</td>
+                </tr>
+                <tr>
+                    <td><code>getProvider()</code></td>
+                    <td>Get a service by name</td>
+                </tr>
+                <tr>
+                    <td><code>startProvider()</code></td>
+                    <td>Start a service</td>
+                </tr>
+                <tr>
+                    <td><code>stopProvider()</code></td>
+                    <td>Stop a service</td>
+                </tr>
+                <tr>
+                    <td><code>startAllProviders()</code></td>
+                    <td>Start all services in dependency order</td>
+                </tr>
+                <tr>
+                    <td><code>injectDependencies()</code></td>
+                    <td>Inject dependencies into a service</td>
+                </tr>
+                <tr>
+                    <td><code>connect()</code></td>
+                    <td>Add a method to a service</td>
+                </tr>
+            </table>
+
+            <h3>Provider</h3>
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><code>init()</code></td>
+                    <td>Initialize the service</td>
+                </tr>
+                <tr>
+                    <td><code>start()</code></td>
+                    <td>Start the service</td>
+                </tr>
+                <tr>
+                    <td><code>stop()</code></td>
+                    <td>Stop the service</td>
+                </tr>
+                <tr>
+                    <td><code>destroy()</code></td>
+                    <td>Destroy the service</td>
+                </tr>
+                <tr>
+                    <td><code>getDependency()</code></td>
+                    <td>Get a dependency</td>
+                </tr>
+                <tr>
+                    <td><code>getMetadata()</code></td>
+                    <td>Get service metadata</td>
+                </tr>
+                <tr>
+                    <td><code>setMetatable()</code></td>
+                    <td>Set custom metatable</td>
+                </tr>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>ProviderService Documentation | A lightweight service-oriented framework for roblox-ts</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Highlight current section in navigation
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
