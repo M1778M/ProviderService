@@ -12,3 +12,11 @@ profile.svg
 
 # Time trace
 trace.json
+=======
+/node_modules
+/out
+/include
+*.tsbuildinfo
+.vscode/
+.prettierrc
+.eslintrc
